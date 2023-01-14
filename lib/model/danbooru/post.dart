@@ -12,6 +12,6 @@ class Post {
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     tag_string = json['tag_string'];
-    file_url = json['file_url'];
+    file_url = json['preview_file_url'];
   }
 }

@@ -33,11 +33,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final controller = Provider.of<ArchiveController>(
+      final controller = Provider.of<DanbooruController>(
         context,
         listen: false,
       );
-      controller.getGamelists();
+      controller.getPosts();
+      controller.searchTerm();
     });
     super.initState();
   }
@@ -48,49 +49,51 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: searchBody(),
-      // bottomNavigationBar:
-      //     BottomNavigationBar(items: const <BottomNavigationBarItem>[
-      //   BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-      //   BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-      // ], currentIndex: _selectedIndex, onTap: _onItemTapped),
+      body: _selectedIndex == 0 ? mainBody() : searchBody(),
+      bottomNavigationBar:
+          BottomNavigationBar(items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+      ], currentIndex: _selectedIndex, onTap: _onItemTapped),
     );
   }
 
-  // Consumer mainBody() {
-  //   return Consumer<ArchiveController>(builder: (context, value, child) {
-  //     return RefreshIndicator(
-  //       onRefresh: () async {
-  //         return Provider.of<ArchiveController>(
-  //           context,
-  //           listen: false,
-  //         ).getGamelists();
-  //       },
-  //       child: ListView.builder(
-  //         itemCount: value.gamelists.length,
-  //         itemBuilder: (context, index) {
-  //           Post post = value.gamelists[index];
-  //           return PhotoCard(post: post);
-  //         },
-  //       ),
-  //     );
-  //   });
-  // }
-
-  Consumer searchBody() {
-    return Consumer<ArchiveController>(builder: (context, value, child) {
+  Consumer mainBody() {
+    return Consumer<DanbooruController>(builder: (context, value, child) {
       return RefreshIndicator(
         onRefresh: () async {
-          return Provider.of<ArchiveController>(
+          return Provider.of<DanbooruController>(
             context,
             listen: false,
-          ).getGamelists();
+          ).getPosts();
         },
         child: ListView.builder(
-          itemCount: value.getGamelists().length,
+          itemCount: value.posts.length,
           itemBuilder: (context, index) {
-            GameList search = value.getGamelists()[index];
-            return SearchResult(gamelist: search);
+            Post post = value.posts[index];
+            return PhotoCard(post: post);
+          },
+        ),
+      );
+    });
+  }
+
+  Consumer searchBody() {
+    return Consumer<DanbooruController>(builder: (context, value, child) {
+      return RefreshIndicator(
+        onRefresh: () async {
+          return Provider.of<DanbooruController>(
+            context,
+            listen: false,
+          ).searchTerm();
+        },
+        child: ListView.builder(
+          itemCount: value.searches.length,
+          itemBuilder: (context, index) {
+            Search search = value.searches[index];
+            return SearchResult(
+              search: search,
+            );
           },
         ),
       );

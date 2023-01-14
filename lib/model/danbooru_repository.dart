@@ -12,7 +12,8 @@ class DanbooruRepository {
 
   Future<List<Post>?> getPosts() async {
     try {
-      Response response = await dio.get('posts.json?limit=10?rating=s');
+      Response response =
+          await dio.get('posts.json?limit=10&tags=rating%3Ag%2Cs');
       List<dynamic> res = response.data;
       List<Post> posts = res.map((item) => Post.fromJson(item)).toList();
 
@@ -25,7 +26,7 @@ class DanbooruRepository {
   Future<List<Search>?> searchTerm() async {
     try {
       Response response = await dio.get(
-          'autocomplete.json?search[type]=tag_query&limit=10&search[query]=naruto');
+          'autocomplete.json?search[type]=tag_query&limit=10&search[query]=akiyama');
       List<dynamic> res = response.data;
       List<Search> searches = res.map((item) => Search.fromJson(item)).toList();
 

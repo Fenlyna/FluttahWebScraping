@@ -29,7 +29,7 @@ class DanbooruController extends ChangeNotifier {
     setLoading(false);
   }
 
-  getSearch() async {
+  searchTerm() async {
     searches.clear();
     setLoading(true);
 
