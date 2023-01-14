@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:individual_assignment/model/archive/game_list.dart';
+import 'package:individual_assignment/model/danbooru/search.dart';
 
 class SearchResult extends StatelessWidget {
-  final GameList gamelist;
+  final Search search;
   const SearchResult({
     Key? key,
-    required this.gamelist,
+    required this.search,
   }) : super(key: key);
 
   @override
@@ -18,13 +18,13 @@ class SearchResult extends StatelessWidget {
       ),
       leading: Icon(Icons.search),
       title: Text(
-        gamelist.name ?? '',
+        search.label ?? '',
         style: TextStyle(
           fontWeight: FontWeight.w500,
         ),
       ),
       subtitle: Text(
-        gamelist.size.toString(),
+        search.post_count.toString(),
       ),
     );
   }

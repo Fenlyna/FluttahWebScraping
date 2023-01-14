@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:individual_assignment/model/danbooru/post.dart';
 
-import '../model/data/photo_list.dart';
+// import '../model/data/photo_list.dart';
 
 class PhotoCard extends StatelessWidget {
   final Post post;
